@@ -26,8 +26,18 @@ public class NodeController {
 	}
 
 	@PostMapping("/add")
-	public Node newEmployee(@RequestBody Node newNode) {
+	public Node newNode(@RequestBody Node newNode) {
 		return nodeRepository.save(newNode);
+	}
+
+	@PostMapping("/update")
+	public Node updateNode(@RequestBody Node node) {
+		return nodeRepository.save(node);
+	}
+
+	@PostMapping("/delete")
+	public void deleteNode(@RequestBody Node node) {
+		nodeRepository.delete(node);
 	}
 
 }

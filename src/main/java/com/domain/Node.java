@@ -1,12 +1,16 @@
 package com.domain;
 
 import javax.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "nodes", schema="steve")
+@SQLDelete(sql="UPDATE nodes SET deleted = true WHERE id = ?")
+@Where(clause="deleted = false")
 public class Node {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -14,10 +18,13 @@ public class Node {
 		private String uuid;
 		private String name;
 		private Long value;
-		@OneToMany(cascade = CascadeType.PERSIST)
+		private boolean deleted;
+		@SQLDelete(sql="UPDATE nodes SET deleted = true WHERE id = ?")
+		@OneToMany(cascade = CascadeType.ALL)
 		@JoinTable(name="node_parents",
 			joinColumns=@JoinColumn(name="parent_id"),
 			inverseJoinColumns=@JoinColumn(name="node_id"))
+		@Where(clause="deleted = false")
 		private List<Node> children;
 
     public Long getId() {
@@ -50,6 +57,14 @@ public class Node {
 
 		public void setValue(Long value) {
 			this.value = value;
+		}
+
+		public boolean getDeleted() {
+			return deleted;
+		}
+
+		public void setDeleted(boolean deleted) {
+			this.deleted = deleted;
 		}
 
 		public List<Node> getChildren() {
