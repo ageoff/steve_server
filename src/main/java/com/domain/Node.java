@@ -19,7 +19,7 @@ public class Node {
 		private String name;
 		private Long value;
 		private boolean deleted;
-		private boolean tree_node;
+		private boolean tree;
 		@SQLDelete(sql="UPDATE nodes SET deleted = true WHERE id = ?")
 		@OneToMany(cascade = CascadeType.ALL)
 		@JoinTable(name="node_parents",
@@ -68,12 +68,12 @@ public class Node {
 			this.deleted = deleted;
 		}
 
-		public boolean getTreeNode() {
-			return tree_node;
+		public boolean getTree() {
+			return tree;
 		}
 
-		public void setTreeNode(boolean tree_node) {
-			this.tree_node = tree_node;
+		public void setTree(boolean tree) {
+			this.tree = tree;
 		}
 
 		public List<Node> getChildren() {

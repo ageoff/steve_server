@@ -13,7 +13,7 @@ CREATE TABLE steve.nodes (
 	name varchar(255) NOT NULL,
 	value bigint,
 	deleted boolean NOT NULL DEFAULT false,
-	tree_node boolean NOT NULL DEFAULT false
+	tree boolean NOT NULL DEFAULT false
 );
 
 CREATE TABLE steve.node_parents (
